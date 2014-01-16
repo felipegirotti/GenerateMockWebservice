@@ -1,6 +1,7 @@
 <?php
 
 ini_set('display_errors', 0);
+ini_set('allow_url_fopen', 1);
 
 set_include_path(implode(PATH_SEPARATOR, array(
     dirname(__FILE__) . '/library/',
