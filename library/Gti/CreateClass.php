@@ -1,10 +1,18 @@
 <?php
 
+/**
+ * Classe que gera as classes para o mock webservice
+ * @package Gti
+ * @author Felipe Girotti <felipe.girotti@gmail.com>
+ */
+
+namespace Gti;
+
 class CreateClass {
     
     protected $configClass;
     protected $pathUrl;
-    protected $pathQueryString;
+    protected $pathQueryString;	
     public $serverName;
     public $currentClass;
 
@@ -14,6 +22,12 @@ class CreateClass {
         $this->createUri();
     }
     
+	/**
+	 * Cria a classe webservice dinamicamente
+	 * 
+	 * @return void
+	 * @throws \InvalidArgumentException
+	 */
     public function generate()
     {       
         foreach ($this->configClass as $class) {
@@ -49,7 +63,8 @@ class CreateClass {
     private function createClass($arrClass) {
         $class = "class {$arrClass['name']} { ";
         foreach ($arrClass['methods'] as $name => $method) {
-            $class .= $this->createMethod($name, $method['comments'], $method['parameters'], $method['returns']);
+			$method['name'] = $name;
+            $class .= $this->createMethod($method);
         }
         $class .= '};';
         return $class;
@@ -58,18 +73,12 @@ class CreateClass {
     /**
      * Cria um método public
      * 
-     * @param string $name
-     * @param string $comment
-     * @param array $parameters
-     * @param string $return
+     * @param array $method
      * @return string
      */
-    private function createMethod($name, $comment, $parameters, $return) {
-        $parameters = implode(',', $parameters);
-        return " {$comment} " .  
-            " public function {$name} ({$parameters}) { " .
-            " return {$return};" .
-            "}";
+    private function createMethod(array $method) {
+        $createMethod = new CreateMethod($method);
+		return $createMethod->generate();
     }
 
 }

@@ -27,13 +27,12 @@ try {
     if (!is_array($configWs))
         throw new InvalidArgumentException('Não foi encontrado o array de configurações');
     
-    $classes = new CreateClass($configWs);
+    $classes = new \Gti\CreateClass($configWs);
     $classes->generate();
 
     if (isset($_GET['wsdl'])) {    
         $discovery = new Zend_Soap_AutoDiscover();
-        $discovery->setClass($classes->currentClass['class']['name']);
-        //$discovery->setUri(/*$configWs['uri']*/);
+        $discovery->setClass($classes->currentClass['class']['name']);        
         $discovery->handle();
     } else {
         $soap = new Zend_Soap_Server(null, array('uri' => 'http://' . $classes->serverName . $classes->currentClass['uri']));

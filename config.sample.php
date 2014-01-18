@@ -7,10 +7,11 @@ return array(
         'class' => array(
             'name' => 'SoapTeste',
             'methods' => array(
-                'hello' => array(
-                    'comments' => "\n/**\n* Método Hello\n*\n* @param string \$algumacoisa\n* @return string\n*/\n",
+                'hello' => array(					
+                    'annotation' => "\n/**\n* Método Hello\n*\n* @param string \$algumacoisa\n* @return string\n*/\n",
                     'parameters' => array('$algumacoisa'),
-                    'returns' => "\$algumacoisa . ' Bem vindo';"
+					'bodyBlock' => "\$retString = 'Bem vindo ' . \$algumacoisa; ",
+                    'returns' => "\$retString;"
                 )
             )
         )
