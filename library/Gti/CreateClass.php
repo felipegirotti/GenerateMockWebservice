@@ -30,12 +30,14 @@ class CreateClass {
 	 */
     public function generate()
     {       
-        foreach ($this->configClass as $class) {
-            if ($this->checkUri($class['uri'])) {
-                $this->currentClass = $class;
-                eval ($this->createClass($class['class']));
-                return;
-            }
+        foreach ($this->configClass as $routes) {
+			foreach ($routes as $class) {
+				if ($this->checkUri($class['uri'])) {
+					$this->currentClass = $class;
+					eval ($this->createClass($class['class']));
+					return;
+				}
+			}
         }
         throw new \InvalidArgumentException("Não foi encontrado a rota para {$this->pathUrl} no arquivo de configurações");
     }
